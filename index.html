@@ -249,13 +249,10 @@
     }
 
     function renderDefinition(){
-      const d = gameState.answerData;
       const area = document.getElementById('definition-area');
-      if((!d || !d.meaning) && !gameState.gameOver){ area.innerHTML=''; return; }
-      if(!d){ area.innerHTML=''; return; }
-      area.innerHTML = `<div class="def-panel"><div class="wod-chip">Palavra do dia</div><div class="def-word" style="margin-top:8px">${escapeHtml(d.word)}</div>${d.type ? `<div class="def-type">${escapeHtml(d.type)}</div>` : ''}<div class="def-meaning">${escapeHtml(d.meaning || '')}</div>${d.phrase ? `<div class="def-phrase">${escapeHtml(d.phrase)}</div>` : ''}</div>`;
+      area.innerHTML = '';
     }
-
+    
     function applySettings(){
       if(settings.colorblind){
         document.documentElement.style.setProperty('--correct','#f5793a');
