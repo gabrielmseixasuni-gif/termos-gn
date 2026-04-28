@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TermoGN – Supabase</title>
+  <title>TermoGN Supabase Corrigido</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -15,7 +15,7 @@
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%, #1a1060 0%, transparent 50%),radial-gradient(ellipse at 80% 90%, #0d1a30 0%, transparent 50%);pointer-events:none;z-index:0}
+    body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%, #1a1060 0, transparent 50%),radial-gradient(ellipse at 80% 90%, #0d1a30 0, transparent 50%);pointer-events:none;z-index:0}
     .screen{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1}.screen.active{display:flex}
     header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border);background:rgba(26,26,36,.9);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100}
     .logo,.home-logo{font-family:var(--font-title);background:linear-gradient(135deg,var(--accent),#ff9f43);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -25,8 +25,7 @@
     #screen-home{align-items:center;justify-content:center;padding:40px 20px}.home-hero{text-align:center;margin-bottom:40px}.home-tagline{font-size:.95rem;margin-top:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
     .home-tiles{display:flex;gap:8px;justify-content:center;margin:28px 0}.demo-tile{width:52px;height:52px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-size:2rem;font-weight:700}
     .section-label{font-size:.75rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
-    .char-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px}.char-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:.2s}.char-card:hover{border-color:var(--accent);transform:translateY(-3px)}.char-card.selected{border-color:var(--accent);background:rgba(247,201,72,.1)}
-    .char-emoji{font-size:2rem}.char-name{font-size:.65rem;font-weight:700;color:var(--text-muted);text-align:center}
+    .char-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px}.char-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:.2s}.char-card:hover{border-color:var(--accent);transform:translateY(-3px)}.char-card.selected{border-color:var(--accent);background:rgba(247,201,72,.1)}.char-emoji{font-size:2rem}.char-name{font-size:.65rem;font-weight:700;color:var(--text-muted);text-align:center}
     .name-row{display:flex;gap:10px;margin-bottom:24px}.input-field{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:var(--radius);font-family:var(--font-body);font-size:.95rem;outline:none}.input-field:focus{border-color:var(--accent)}
     .btn,.icon-btn,.tab,.nav-btn,.kb-key,.toggle,.we-del{cursor:pointer}.btn{padding:12px 28px;border-radius:var(--radius);border:none;font-family:var(--font-body);font-size:1rem;font-weight:800;transition:.2s;letter-spacing:.5px;text-transform:uppercase}.btn-primary{background:linear-gradient(135deg,var(--accent),#ff9f43);color:#1a1200;box-shadow:0 4px 20px rgba(247,201,72,.3)}.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}.btn-danger{background:var(--red);color:#fff}.btn-full{width:100%}
     .icon-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
@@ -36,20 +35,18 @@
     @keyframes rowBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}60%{transform:translateY(-4px)}}
     @keyframes tileFlip{0%{transform:rotateX(0)}45%{transform:rotateX(-90deg)}55%{transform:rotateX(-90deg)}100%{transform:rotateX(0)}}
     .keyboard{padding:10px 0 16px;width:100%;max-width:480px}.kb-row{display:flex;justify-content:center;gap:5px;margin-bottom:5px}.kb-key{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-family:var(--font-title);font-size:1.35rem;height:52px;display:flex;align-items:center;justify-content:center;user-select:none;min-width:32px;flex:1;max-width:42px}.kb-key.wide{max-width:72px;font-size:.85rem;font-family:var(--font-body);font-weight:800}.kb-key.correct{background:var(--correct-key);border-color:var(--correct-key);color:#fff}.kb-key.present{background:var(--present-key);border-color:var(--present-key);color:#1a1200}.kb-key.absent{background:var(--absent-key);border-color:var(--absent-key);color:#555}
-    .def-panel,.stat-box,.rank-item,.word-entry,.modal,.result-box{background:var(--surface);border:1px solid var(--border)}
-    .def-panel{border-radius:12px;padding:16px;max-width:420px;width:100%;margin:10px 16px}.def-word{font-family:var(--font-title);font-size:1.6rem;color:var(--accent);letter-spacing:2px}.def-type{font-size:.75rem;color:var(--text-muted);font-style:italic;margin-bottom:6px}.def-meaning{font-size:.9rem;line-height:1.5}.def-phrase{font-size:.85rem;color:var(--text-muted);font-style:italic;margin-top:6px;border-left:3px solid var(--accent);padding-left:10px}
+    .def-panel,.stat-box,.rank-item,.word-entry,.modal,.result-box{background:var(--surface);border:1px solid var(--border)}.def-panel{border-radius:12px;padding:16px;max-width:420px;width:100%;margin:10px 16px}.def-word{font-family:var(--font-title);font-size:1.6rem;color:var(--accent);letter-spacing:2px}.def-type{font-size:.75rem;color:var(--text-muted);font-style:italic;margin-bottom:6px}.def-meaning{font-size:.9rem;line-height:1.5}.def-phrase{font-size:.85rem;color:var(--text-muted);font-style:italic;margin-top:6px;border-left:3px solid var(--accent);padding-left:10px}
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0;max-width:480px;width:100%}.stat-box{border-radius:10px;padding:12px;text-align:center}.stat-num,.rank-pts,.rank-pos,.dist-lbl,.countdown-time{font-family:var(--font-title)}.stat-num{font-size:2rem;color:var(--accent)}.stat-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;margin-top:2px}
     .rank-list{width:100%;max-width:480px;display:flex;flex-direction:column;gap:8px}.rank-item{border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:14px}.rank-item.top-1{border-color:var(--accent);background:rgba(247,201,72,.05)}.rank-item.top-2{border-color:#aaa;background:rgba(170,170,170,.04)}.rank-item.top-3{border-color:#cd7f32;background:rgba(205,127,50,.04)}.rank-pos{font-size:1.6rem;width:36px;text-align:center}.rank-emoji{font-size:1.8rem}.rank-info{flex:1}.rank-name{font-weight:800;font-size:.95rem}.rank-stats{font-size:.75rem;color:var(--text-muted);margin-top:2px}.rank-pts{font-size:1.8rem;color:var(--accent)}
     .tabs{display:flex;gap:6px;max-width:480px;width:100%;margin-bottom:16px}.tab{flex:1;padding:9px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text-muted);font-family:var(--font-body);font-weight:700;font-size:.85rem}.tab.active{background:var(--accent);color:#1a1200;border-color:var(--accent)}
     .editorial-form{width:100%;max-width:480px;display:flex;flex-direction:column;gap:12px}.form-group{display:flex;flex-direction:column;gap:5px}.form-label{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}textarea.input-field{resize:vertical;min-height:80px}.word-list{max-width:480px;width:100%;margin-top:20px;display:flex;flex-direction:column;gap:6px}.word-entry{border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between}.we-word{font-family:var(--font-title);font-size:1.2rem;color:var(--accent);letter-spacing:2px}.we-date{font-size:.75rem;color:var(--text-muted)}.we-del{background:none;border:none;color:var(--red);padding:4px 8px}.today-badge{background:var(--accent);color:#1a1200;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:1px}
-    .setting-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}.setting-name{font-weight:700;font-size:.95rem}.toggle{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative}.toggle.on{background:var(--correct)}.toggle::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s}.toggle.on::after{transform:translateX(20px)}
+    .setting-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}.setting-name{font-weight:700;font-size:.95rem}.toggle{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative}.toggle.on{background:var(--correct)}.toggle::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s}.toggle.on::after{transform:translateX(20px)}
     .nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(26,26,36,.97);border-top:1px solid var(--border);display:flex;z-index:200;backdrop-filter:blur(10px)}.nav-btn{flex:1;padding:12px 8px;background:none;border:none;color:var(--text-muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--font-body);font-size:.65rem;font-weight:700;text-transform:uppercase}.nav-btn.active{color:var(--accent)}.nav-icon{font-size:1.3rem}
     .modal-overlay,.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:20px}.modal-overlay.open,.result-overlay.show{display:flex}.modal{border-radius:16px;padding:28px;max-width:420px;width:100%;max-height:90vh;overflow-y:auto}.result-box{border-radius:20px;padding:32px;max-width:380px;width:100%;text-align:center}.modal-title,.result-title{font-family:var(--font-title);letter-spacing:2px;color:var(--accent)}.modal-title{font-size:1.8rem}.result-title{font-size:2.8rem;margin-bottom:8px}.result-title.win{color:var(--correct)}.result-title.lose{color:var(--red)}.result-word{font-family:var(--font-title);font-size:2rem;color:var(--accent);letter-spacing:4px;margin-bottom:8px}.result-def{font-size:.85rem;color:var(--text-muted);font-style:italic;margin-bottom:20px;line-height:1.5}.result-btns{display:flex;gap:10px}.share-grid{display:flex;flex-direction:column;gap:3px;margin:12px 0;font-family:monospace;font-size:1.3rem;letter-spacing:2px}.countdown-wrap{text-align:center;margin-bottom:12px}.countdown-time{font-size:1.8rem;color:var(--text)}
     #toast-container{position:fixed;top:80px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:999;pointer-events:none}.toast{background:var(--text);color:var(--bg);padding:10px 20px;border-radius:30px;font-weight:800;font-size:.9rem;text-align:center;max-width:300px}
     .help-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}.help-tile{width:44px;height:44px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-size:1.8rem}.ht-correct{background:var(--correct);color:#fff}.ht-present{background:var(--present);color:#1a1200}.ht-absent{background:var(--absent);color:#888}.ht-empty{background:var(--tile-empty);border:2px solid var(--tile-border)}.help-desc{flex:1;font-size:.88rem;line-height:1.4;min-width:180px}
-    .divider{border:none;border-top:1px solid var(--border);margin:16px 0}.wod-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(76,175,125,.1);border:1px solid var(--correct);border-radius:20px;padding:4px 10px;font-size:.75rem;font-weight:700;color:var(--correct)}
-    .hidden{display:none!important}
-    @media(max-width:380px){.tile{width:50px;height:50px;font-size:1.9rem}.kb-key{height:46px;font-size:1.2rem}.home-logo{font-size:4rem}}
+    .divider{border:none;border-top:1px solid var(--border);margin:16px 0}.wod-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(76,175,125,.1);border:1px solid var(--correct);border-radius:20px;padding:4px 10px;font-size:.75rem;font-weight:700;color:var(--correct)}.hidden{display:none!important}
+    @media (max-width:380px){.tile{width:50px;height:50px;font-size:1.9rem}.kb-key{height:46px;font-size:1.2rem}.home-logo{font-size:4rem}}
   </style>
 </head>
 <body>
@@ -72,53 +69,32 @@
         <div class="section-label">Como você se chama?</div>
         <div class="name-row">
           <input class="input-field" id="player-name" type="text" placeholder="Seu nome..." maxlength="32">
-          <button class="btn btn-primary" id="start-btn">Jogar →</button>
+          <button class="btn btn-primary" id="start-btn">Jogar</button>
         </div>
       </div>
     </div>
   </div>
 
   <div class="screen" id="screen-game">
-    <header>
-      <div style="display:flex;align-items:center;gap:10px"><button class="icon-btn" data-screen="home" title="Home">🏠</button><span class="logo">TermoGN</span></div>
-      <div style="display:flex;gap:8px"><button class="icon-btn" data-open-modal="modal-help" title="Ajuda">❓</button><button class="icon-btn" data-open-modal="modal-stats" title="Estatísticas">📊</button><button class="icon-btn" data-screen="ranking" title="Ranking">🏆</button></div>
-    </header>
-    <div class="scroll-content">
-      <div class="game-header-bar" id="game-player-bar"></div>
-      <div class="board-wrap"><div class="board" id="board"></div></div>
-      <div class="keyboard" id="keyboard"></div>
-      <div id="definition-area"></div>
-      <div style="height:20px"></div>
-    </div>
+    <header><div style="display:flex;align-items:center;gap:10px"><button class="icon-btn" data-screen="home" title="Home">⌂</button><span class="logo">TermoGN</span></div><div style="display:flex;gap:8px"><button class="icon-btn" data-open-modal="modal-help" title="Ajuda">?</button><button class="icon-btn" data-open-modal="modal-stats" title="Estatísticas">◔</button><button class="icon-btn" data-screen="ranking" title="Ranking">🏆</button></div></header>
+    <div class="scroll-content"><div class="game-header-bar" id="game-player-bar"></div><div class="board-wrap"><div class="board" id="board"></div></div><div class="keyboard" id="keyboard"></div><div id="definition-area"></div><div style="height:20px"></div></div>
   </div>
 
   <div class="screen" id="screen-ranking">
-    <header>
-      <div style="display:flex;align-items:center;gap:10px"><button class="icon-btn" data-screen="game" title="Voltar">←</button><span class="logo">Ranking</span></div>
-      <button class="icon-btn" id="refresh-ranking-btn" title="Atualizar ranking">⟳</button>
-    </header>
-    <div class="scroll-content">
-      <div class="stats-grid" id="my-stats"></div>
-      <div id="rank-list-wrap" style="width:100%;max-width:480px;padding:0 16px"></div>
-    </div>
+    <header><div style="display:flex;align-items:center;gap:10px"><button class="icon-btn" data-screen="game" title="Voltar">←</button><span class="logo">Ranking</span></div><button class="icon-btn" id="refresh-ranking-btn" title="Atualizar ranking">↻</button></header>
+    <div class="scroll-content"><div class="stats-grid" id="my-stats"></div><div id="rank-list-wrap" style="width:100%;max-width:480px;padding:0 16px"></div></div>
   </div>
 
   <div class="screen" id="screen-editorial">
-    <header>
-      <div style="display:flex;align-items:center;gap:10px"><button class="icon-btn" data-screen="game">←</button><span class="logo">Editorial</span></div>
-      <button class="icon-btn" id="refresh-editorial-btn" title="Atualizar">⟳</button>
-    </header>
+    <header><div style="display:flex;align-items:center;gap:10px"><button class="icon-btn" data-screen="game">←</button><span class="logo">Editorial</span></div><button class="icon-btn" id="refresh-editorial-btn" title="Atualizar">↻</button></header>
     <div class="scroll-content" style="padding:16px">
-      <div class="tabs" style="margin-top:8px">
-        <button class="tab active" data-edit-tab="add" id="tab-add">➕ Adicionar</button>
-        <button class="tab" data-edit-tab="list" id="tab-list">📋 Palavras</button>
-      </div>
+      <div class="tabs" style="margin-top:8px"><button class="tab active" data-edit-tab="add" id="tab-add">Adicionar</button><button class="tab" data-edit-tab="list" id="tab-list">Palavras</button></div>
       <div id="editpanel-add" class="editorial-form">
-        <div class="form-group"><label class="form-label">Palavra (5 letras) *</label><input class="input-field" id="ed-word" type="text" placeholder="GATOS" maxlength="5"></div>
+        <div class="form-group"><label class="form-label">Palavra 5 letras</label><input class="input-field" id="ed-word" type="text" placeholder="GATOS" maxlength="5"></div>
         <div class="form-group"><label class="form-label">Tipo</label><input class="input-field" id="ed-type" type="text" placeholder="substantivo"></div>
-        <div class="form-group"><label class="form-label">Significado *</label><textarea class="input-field" id="ed-meaning" placeholder="Definição da palavra..."></textarea></div>
-        <div class="form-group"><label class="form-label">Frase / dica</label><textarea class="input-field" id="ed-phrase" placeholder="Frase usando a palavra..."></textarea></div>
-        <div class="form-group"><label class="form-label">Data de uso *</label><input class="input-field" id="ed-date" type="date"></div>
+        <div class="form-group"><label class="form-label">Significado</label><textarea class="input-field" id="ed-meaning" placeholder="Definição da palavra..."></textarea></div>
+        <div class="form-group"><label class="form-label">Frase dica</label><textarea class="input-field" id="ed-phrase" placeholder="Frase usando a palavra..."></textarea></div>
+        <div class="form-group"><label class="form-label">Data de uso</label><input class="input-field" id="ed-date" type="date"></div>
         <button class="btn btn-primary btn-full" id="add-word-btn">Adicionar Palavra</button>
       </div>
       <div id="editpanel-list" class="hidden" style="width:100%;max-width:480px"><div id="word-list-el"></div></div>
@@ -138,113 +114,101 @@
     </div>
   </div>
 
-  <nav class="nav-bar hidden" id="nav-bar">
-    <button class="nav-btn active" id="nav-game" data-screen="game"><span class="nav-icon">🎮</span>Jogar</button>
-    <button class="nav-btn" id="nav-ranking" data-screen="ranking"><span class="nav-icon">🏆</span>Ranking</button>
-    <button class="nav-btn" id="nav-editorial" data-screen="editorial"><span class="nav-icon">📝</span>Editorial</button>
-    <button class="nav-btn" id="nav-settings" data-screen="settings"><span class="nav-icon">⚙️</span>Config</button>
-  </nav>
+  <nav class="nav-bar hidden" id="nav-bar"><button class="nav-btn active" id="nav-game" data-screen="game"><span class="nav-icon">⌨</span>Jogar</button><button class="nav-btn" id="nav-ranking" data-screen="ranking"><span class="nav-icon">🏆</span>Ranking</button><button class="nav-btn" id="nav-editorial" data-screen="editorial"><span class="nav-icon">✎</span>Editorial</button><button class="nav-btn" id="nav-settings" data-screen="settings"><span class="nav-icon">⚙</span>Config</button></nav>
 
   <div class="modal-overlay" id="modal-help"><div class="modal"><div style="display:flex;justify-content:space-between;align-items:center"><div class="modal-title">Como Jogar</div><button class="icon-btn" data-close-modal="modal-help">✕</button></div><p style="font-size:.9rem;margin-bottom:16px;line-height:1.6">Adivinhe a palavra secreta em <strong>6 tentativas</strong>.<br>Cada tentativa deve ser uma palavra de <strong>5 letras</strong>.</p><div class="help-row"><div class="help-tile ht-correct">T</div><div class="help-tile ht-empty">U</div><div class="help-tile ht-empty">R</div><div class="help-tile ht-empty">M</div><div class="help-tile ht-empty">A</div><div class="help-desc"><strong style="color:var(--correct)">T</strong> está na posição correta.</div></div><div class="help-row"><div class="help-tile ht-empty">V</div><div class="help-tile ht-empty">I</div><div class="help-tile ht-present">O</div><div class="help-tile ht-empty">L</div><div class="help-tile ht-empty">A</div><div class="help-desc"><strong style="color:var(--present)">O</strong> existe na palavra mas em outra posição.</div></div><div class="help-row"><div class="help-tile ht-empty">P</div><div class="help-tile ht-empty">U</div><div class="help-tile ht-empty">L</div><div class="help-tile ht-absent">G</div><div class="help-tile ht-empty">A</div><div class="help-desc"><strong style="color:#666">G</strong> não está na palavra.</div></div></div></div>
   <div class="modal-overlay" id="modal-stats"><div class="modal"><div style="display:flex;justify-content:space-between;align-items:center"><div class="modal-title">Estatísticas</div><button class="icon-btn" data-close-modal="modal-stats">✕</button></div><div id="modal-stats-content"></div></div></div>
-  <div class="result-overlay" id="result-overlay"><div class="result-box"><div id="result-emoji" style="font-size:4rem;margin-bottom:12px">🎉</div><div class="result-title" id="result-title">INCRÍVEL!</div><div class="result-word" id="result-word"></div><div id="result-pts" style="font-size:1.1rem;margin-bottom:20px;color:var(--text-muted)"></div><div class="result-def" id="result-def"></div><div class="countdown-wrap"><div class="countdown-label">Próxima palavra em</div><div class="countdown-time" id="result-countdown">--:--:--</div></div><div id="share-area"></div><div class="result-btns"><button class="btn btn-secondary" style="flex:1" id="share-btn">📤 Compartilhar</button><button class="btn btn-primary" style="flex:1" id="close-result-btn">Fechar</button></div></div></div>
+  <div class="result-overlay" id="result-overlay"><div class="result-box"><div id="result-emoji" style="font-size:4rem;margin-bottom:12px"></div><div class="result-title" id="result-title">INCRÍVEL!</div><div class="result-word" id="result-word"></div><div id="result-pts" style="font-size:1.1rem;margin-bottom:20px;color:var(--text-muted)"></div><div class="result-def" id="result-def"></div><div class="countdown-wrap"><div class="countdown-label">Próxima palavra em</div><div class="countdown-time" id="result-countdown">--:--:--</div></div><div id="share-area"></div><div class="result-btns"><button class="btn btn-secondary" style="flex:1" id="share-btn">Compartilhar</button><button class="btn btn-primary" style="flex:1" id="close-result-btn">Fechar</button></div></div></div>
   <div id="toast-container"></div>
 
   <script>
     const SUPABASE_URL = 'https://wrcepwhievqcujumjupf.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_uvvPtv_6IEyiLtaqgpZKUg_SCmxL2ok';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_KEY = 'sb_publishable_uvvPtv6IEyiLtaqgpZKUgSCmxL2ok';
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const CHARACTERS = [
-      { id:'ninja', emoji:'🥷', name:'Ninja' }, { id:'wizard', emoji:'🧙', name:'Mago' }, { id:'robot', emoji:'🤖', name:'Robô' },
-      { id:'fox', emoji:'🦊', name:'Raposa' }, { id:'lion', emoji:'🦁', name:'Leão' }, { id:'star', emoji:'🌟', name:'Estrela' },
-      { id:'dino', emoji:'🦕', name:'Dino' }, { id:'fire', emoji:'🔥', name:'Chama' }, { id:'ghost', emoji:'👻', name:'Fantasma' }, { id:'rocket', emoji:'🚀', name:'Foguete' }
+      { id:'ninja', emoji:'🥷', name:'Ninja' },
+      { id:'wizard', emoji:'🧙', name:'Mago' },
+      { id:'robot', emoji:'🤖', name:'Robô' },
+      { id:'fox', emoji:'🦊', name:'Raposa' },
+      { id:'lion', emoji:'🦁', name:'Leão' },
+      { id:'star', emoji:'🌟', name:'Estrela' },
+      { id:'dino', emoji:'🦖', name:'Dino' },
+      { id:'fire', emoji:'🔥', name:'Chama' },
+      { id:'ghost', emoji:'👻', name:'Fantasma' },
+      { id:'rocket', emoji:'🚀', name:'Foguete' }
     ];
-    const KEYBOARD_LAYOUT = [['Q','W','E','R','T','Y','U','I','O','P'],['A','S','D','F','G','H','J','K','L'],['ENTER','Z','X','C','V','B','N','M','⌫']];
+    const KEYBOARD_LAYOUT = [['Q','W','E','R','T','Y','U','I','O','P'],['A','S','D','F','G','H','J','K','L'],['ENTER','Z','X','C','V','B','N','M','←']];
     const WIN_MSGS = ['PERFEITO!','INCRÍVEL!','ÓTIMO!','MUITO BOM!','BOA!','UFA!'];
-    const WIN_EMOJIS = ['🏆','🎉','✨','👏','😎','😅'];
-    const ACCENT_MAP = { A:['Á','Â','Ã','À'], E:['É','Ê'], I:['Í'], O:['Ó','Ô','Õ'], U:['Ú','Ü'], C:['Ç'] };
+    const WIN_EMOJIS = ['🏆','🎉','👏','😄','😅','😮‍💨'];
+    const ACCENT_MAP = { A:['Á','À','Ã','Â'], E:['É','Ê'], I:['Í'], O:['Ó','Ô','Õ'], U:['Ú','Ü'], C:['Ç'] };
 
     const storage = {
-      save(key, value) { try { localStorage.setItem('termogn_' + key, JSON.stringify(value)); } catch(e) {} },
-      load(key, fallback) { try { const v = localStorage.getItem('termogn_' + key); return v !== null ? JSON.parse(v) : fallback; } catch(e) { return fallback; } },
-      remove(key) { try { localStorage.removeItem('termogn_' + key); } catch(e) {} }
+      save(key, value){ try{ localStorage.setItem('termogn_'+key, JSON.stringify(value)); }catch(e){} },
+      load(key, fallback){ try{ const v = localStorage.getItem('termogn_'+key); return v !== null ? JSON.parse(v) : fallback; }catch(e){ return fallback; } },
+      remove(key){ try{ localStorage.removeItem('termogn_'+key); }catch(e){} }
     };
 
     let player = storage.load('player', null);
     let settings = storage.load('settings', { hard:false, colorblind:false, anim:true });
     let gameState = { answer:'', answerData:null, guesses:[], currentGuess:'', currentRow:0, gameOver:false, todayKey:'', loading:false };
 
-    function escapeHtml(value='') {
-      return String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-    }
-    function normalizeWord(word='') {
-      let w = word.toUpperCase().trim();
-      for (const [base, accents] of Object.entries(ACCENT_MAP)) for (const a of accents) w = w.split(a).join(base);
-      return w;
-    }
-    function getTodayKey() {
-      const now = new Date();
-      const y = now.getFullYear();
-      const m = String(now.getMonth()+1).padStart(2,'0');
-      const d = String(now.getDate()).padStart(2,'0');
-      return `${y}-${m}-${d}`;
-    }
-    function saveGameState() {
-      storage.save('gameState_' + gameState.todayKey, { guesses: gameState.guesses, gameOver: gameState.gameOver });
-    }
-    function toast(msg, duration=2200) {
-      const c = document.getElementById('toast-container');
-      const t = document.createElement('div');
-      t.className = 'toast'; t.textContent = msg; c.appendChild(t);
-      setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, duration);
-    }
+    function escapeHtml(value){ return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function normalizeWord(word){ let w = String(word || '').toUpperCase().trim(); for(const [base, accents] of Object.entries(ACCENT_MAP)){ for(const a of accents){ w = w.split(a).join(base); } } return w; }
+    function getTodayKey(){ const now = new Date(); const y = now.getFullYear(); const m = String(now.getMonth()+1).padStart(2,'0'); const d = String(now.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
+    function saveGameState(){ storage.save('gameState_'+gameState.todayKey, { guesses: gameState.guesses, gameOver: gameState.gameOver }); }
+    function toast(msg, duration=2200){ const c = document.getElementById('toast-container'); const t = document.createElement('div'); t.className='toast'; t.textContent=msg; c.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); }, duration); }
 
-    function buildCharGrid() {
+    function buildCharGrid(){
       const grid = document.getElementById('char-grid');
       grid.innerHTML = '';
       CHARACTERS.forEach(c => {
         const div = document.createElement('button');
         div.type = 'button';
         div.className = 'char-card' + (player?.charId === c.id ? ' selected' : '');
+        div.dataset.charId = c.id;
         div.innerHTML = `<div class="char-emoji">${c.emoji}</div><div class="char-name">${escapeHtml(c.name)}</div>`;
         div.addEventListener('click', () => {
           document.querySelectorAll('.char-card').forEach(el => el.classList.remove('selected'));
           div.classList.add('selected');
         });
-        div.dataset.charId = c.id;
         grid.appendChild(div);
       });
       document.getElementById('player-name').value = player?.name || '';
     }
 
-    function buildBoard() {
+    function buildBoard(){
       const board = document.getElementById('board');
-      board.innerHTML = '';
-      for (let r=0; r<6; r++) {
+      board.innerHTML='';
+      for(let r=0;r<6;r++){
         const row = document.createElement('div');
-        row.className = 'board-row'; row.id = 'row-' + r;
-        for (let c=0; c<5; c++) {
+        row.className='board-row';
+        row.id=`row-${r}`;
+        for(let c=0;c<5;c++){
           const tile = document.createElement('div');
-          tile.className = 'tile'; tile.id = `tile-${r}-${c}`; row.appendChild(tile);
+          tile.className='tile';
+          tile.id=`tile-${r}-${c}`;
+          row.appendChild(tile);
         }
         board.appendChild(row);
       }
     }
 
-    function buildKeyboard() {
+    function buildKeyboard(){
       const kb = document.getElementById('keyboard');
-      kb.innerHTML = '';
+      kb.innerHTML='';
       KEYBOARD_LAYOUT.forEach(row => {
-        const rowEl = document.createElement('div'); rowEl.className = 'kb-row';
+        const rowEl = document.createElement('div');
+        rowEl.className='kb-row';
         row.forEach(key => {
           const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'kb-key' + (key.length > 1 ? ' wide' : '');
-          btn.textContent = key; btn.dataset.key = key;
+          btn.type='button';
+          btn.className='kb-key' + (key.length > 1 ? ' wide' : '');
+          btn.textContent=key;
+          btn.dataset.key=key;
           btn.addEventListener('click', () => {
-            if (key === 'ENTER') submitGuess();
-            else if (key === '⌫') deleteLetter();
+            if(key === 'ENTER') submitGuess();
+            else if(key === '←') deleteLetter();
             else addLetter(key);
           });
           rowEl.appendChild(btn);
@@ -253,164 +217,134 @@
       });
     }
 
-    function updateCurrentRow() {
+    function updateCurrentRow(){
       const r = gameState.currentRow;
       const guess = gameState.currentGuess;
-      for (let c=0; c<5; c++) {
+      for(let c=0;c<5;c++){
         const tile = document.getElementById(`tile-${r}-${c}`);
-        if (!tile) continue;
+        if(!tile) continue;
         tile.textContent = guess[c] || '';
         tile.className = 'tile' + (guess[c] ? ' filled' : '');
       }
       renderPlayerBar();
     }
 
-    function renderSavedGuesses() {
-      gameState.guesses.forEach((g, r) => {
-        for (let c=0; c<5; c++) {
+    function renderSavedGuesses(){
+      gameState.guesses.forEach((g,r) => {
+        for(let c=0;c<5;c++){
           const tile = document.getElementById(`tile-${r}-${c}`);
-          if (!tile) continue;
+          if(!tile) continue;
           tile.textContent = g.display[c] || '';
-          tile.className = 'tile ' + g.result[c];
+          tile.className = `tile ${g.result[c]}`;
         }
       });
       updateKeyboard();
     }
 
-    function renderPlayerBar() {
+    function renderPlayerBar(){
       const el = document.getElementById('game-player-bar');
-      if (!player) { el.innerHTML = ''; return; }
+      if(!player){ el.innerHTML=''; return; }
       const char = CHARACTERS.find(c => c.id === player.charId) || CHARACTERS[0];
-      el.innerHTML = `<div class="player-badge"><span style="font-size:1.4rem">${char.emoji}</span><div><div style="font-size:.85rem;font-weight:700">${escapeHtml(player.name)}</div><div class="pts">${player.points || 0} pts</div></div></div><div style="font-size:.8rem;color:var(--text-muted);font-weight:700;letter-spacing:1px">${gameState.gameOver ? 'FIM' : `${gameState.currentRow + 1}/6`}</div>`;
+      el.innerHTML = `<div class="player-badge"><span style="font-size:1.4rem">${char.emoji}</span><div><div style="font-size:.85rem;font-weight:700">${escapeHtml(player.name)}</div><div class="pts">${player.points || 0} pts</div></div></div><div style="font-size:.8rem;color:var(--text-muted);font-weight:700;letter-spacing:1px">${gameState.gameOver ? 'FIM' : (gameState.currentRow + 1) + '/6'}</div>`;
     }
 
-    function renderDefinition() {
+    function renderDefinition(){
       const d = gameState.answerData;
       const area = document.getElementById('definition-area');
-      if (!d || !d.meaning || !gameState.gameOver) { area.innerHTML = ''; return; }
-      area.innerHTML = `<div class="def-panel"><div class="wod-chip">📅 Palavra do dia</div><div class="def-word" style="margin-top:8px">${escapeHtml(d.word)}</div>${d.type ? `<div class="def-type">${escapeHtml(d.type)}</div>` : ''}<div class="def-meaning">${escapeHtml(d.meaning)}</div>${d.phrase ? `<div class="def-phrase">${escapeHtml(d.phrase)}</div>` : ''}</div>`;
+      if((!d || !d.meaning) && !gameState.gameOver){ area.innerHTML=''; return; }
+      if(!d){ area.innerHTML=''; return; }
+      area.innerHTML = `<div class="def-panel"><div class="wod-chip">Palavra do dia</div><div class="def-word" style="margin-top:8px">${escapeHtml(d.word)}</div>${d.type ? `<div class="def-type">${escapeHtml(d.type)}</div>` : ''}<div class="def-meaning">${escapeHtml(d.meaning || '')}</div>${d.phrase ? `<div class="def-phrase">${escapeHtml(d.phrase)}</div>` : ''}</div>`;
     }
 
-    function applySettings() {
-      if (settings.colorblind) {
-        document.documentElement.style.setProperty('--correct', '#f5793a');
-        document.documentElement.style.setProperty('--present', '#85c0f9');
-        document.documentElement.style.setProperty('--correct-key', '#c45e2a');
-        document.documentElement.style.setProperty('--present-key', '#5a90c9');
+    function applySettings(){
+      if(settings.colorblind){
+        document.documentElement.style.setProperty('--correct','#f5793a');
+        document.documentElement.style.setProperty('--present','#85c0f9');
+        document.documentElement.style.setProperty('--correct-key','#c45e2a');
+        document.documentElement.style.setProperty('--present-key','#5a90c9');
       } else {
-        document.documentElement.style.setProperty('--correct', '#4caf7d');
-        document.documentElement.style.setProperty('--present', '#f7c948');
-        document.documentElement.style.setProperty('--correct-key', '#3d9e68');
-        document.documentElement.style.setProperty('--present-key', '#c9a030');
+        document.documentElement.style.setProperty('--correct','#4caf7d');
+        document.documentElement.style.setProperty('--present','#f7c948');
+        document.documentElement.style.setProperty('--correct-key','#3d9e68');
+        document.documentElement.style.setProperty('--present-key','#c9a030');
       }
-      ['hard','colorblind','anim'].forEach(key => document.getElementById('toggle-' + key)?.classList.toggle('on', !!settings[key]));
+      ['hard','colorblind','anim'].forEach(key => document.getElementById(`toggle-${key}`)?.classList.toggle('on', !!settings[key]));
     }
 
-    function toggleSetting(key) {
-      settings[key] = !settings[key];
-      storage.save('settings', settings);
-      applySettings();
-      toast((key === 'hard' ? 'Modo difícil' : key === 'colorblind' ? 'Modo daltônico' : 'Animações') + (settings[key] ? ' ativado' : ' desativado'));
-    }
+    function toggleSetting(key){ settings[key] = !settings[key]; storage.save('settings', settings); applySettings(); toast(`${key === 'hard' ? 'Modo difícil' : key === 'colorblind' ? 'Modo daltônico' : 'Animações'} ${settings[key] ? 'ativado' : 'desativado'}`); }
+    function addLetter(letter){ if(gameState.loading || gameState.gameOver || !player) return; if(gameState.currentGuess.length >= 5) return; gameState.currentGuess += normalizeWord(letter).slice(0,1); updateCurrentRow(); }
+    function deleteLetter(){ if(gameState.loading || gameState.gameOver || !player) return; gameState.currentGuess = gameState.currentGuess.slice(0,-1); updateCurrentRow(); }
 
-    function addLetter(letter) {
-      if (gameState.loading || gameState.gameOver || !player) return;
-      if (gameState.currentGuess.length >= 5) return;
-      gameState.currentGuess += normalizeWord(letter).slice(0,1);
-      updateCurrentRow();
-    }
-    function deleteLetter() {
-      if (gameState.loading || gameState.gameOver || !player) return;
-      gameState.currentGuess = gameState.currentGuess.slice(0, -1);
-      updateCurrentRow();
-    }
-
-    function evaluateGuess(guess, answer) {
+    function evaluateGuess(guess, answer){
       const result = Array(5).fill('absent');
       const ansArr = answer.split('');
       const guessArr = guess.split('');
       const used = Array(5).fill(false);
-      for (let i=0; i<5; i++) if (guessArr[i] === ansArr[i]) { result[i] = 'correct'; used[i] = true; }
-      for (let i=0; i<5; i++) {
-        if (result[i] === 'correct') continue;
-        for (let j=0; j<5; j++) {
-          if (!used[j] && guessArr[i] === ansArr[j]) { result[i] = 'present'; used[j] = true; break; }
-        }
+      for(let i=0;i<5;i++) if(guessArr[i] === ansArr[i]){ result[i]='correct'; used[i]=true; }
+      for(let i=0;i<5;i++){
+        if(result[i] === 'correct') continue;
+        for(let j=0;j<5;j++) if(!used[j] && guessArr[i] === ansArr[j]){ result[i]='present'; used[j]=true; break; }
       }
       return result;
     }
 
-    function checkHardMode(guess) {
-      for (const prev of gameState.guesses) {
-        for (let i=0; i<5; i++) if (prev.result[i] === 'correct' && guess[i] !== prev.raw[i]) return `Posição ${i+1} deve ser ${prev.raw[i]}`;
-        const required = prev.raw.split('').filter((_, i) => prev.result[i] === 'present' || prev.result[i] === 'correct');
-        for (const l of required) if (!guess.includes(l)) return `A letra ${l} deve ser usada`;
+    function checkHardMode(guess){
+      for(const prev of gameState.guesses){
+        for(let i=0;i<5;i++) if(prev.result[i] === 'correct' && guess[i] !== prev.raw[i]) return `Posição ${i+1} deve ser ${prev.raw[i]}`;
+        const required = prev.raw.split('').filter((_,i) => prev.result[i] === 'present' || prev.result[i] === 'correct');
+        for(const l of required) if(!guess.includes(l)) return `A letra ${l} deve ser usada`;
       }
       return null;
     }
 
-    function revealRow(rowIdx, displayWord, result, callback) {
+    function revealRow(rowIdx, displayWord, result, callback){
       const delay = 260;
-      for (let c=0; c<5; c++) {
+      for(let c=0;c<5;c++){
         const tile = document.getElementById(`tile-${rowIdx}-${c}`);
         setTimeout(() => {
-          tile.textContent = displayWord[c] || '';
-          if (settings.anim) {
+          tile.textContent = displayWord[c];
+          if(settings.anim){
             tile.classList.add('flip-anim');
-            setTimeout(() => { tile.className = 'tile ' + result[c]; }, 220);
+            setTimeout(() => tile.className = `tile ${result[c]}`, 220);
             setTimeout(() => tile.classList.remove('flip-anim'), 500);
-          } else {
-            tile.className = 'tile ' + result[c];
-          }
+          } else tile.className = `tile ${result[c]}`;
         }, c * delay);
       }
       setTimeout(callback, 5 * delay + 120);
     }
 
-    function shakeRow(rowIdx) { const row = document.getElementById('row-' + rowIdx); row?.classList.add('shake'); setTimeout(() => row?.classList.remove('shake'), 400); }
-    function bounceRow(rowIdx) { const row = document.getElementById('row-' + rowIdx); row?.classList.add('bounce'); setTimeout(() => row?.classList.remove('bounce'), 600); }
+    function shakeRow(rowIdx){ const row = document.getElementById(`row-${rowIdx}`); row?.classList.add('shake'); setTimeout(() => row?.classList.remove('shake'), 400); }
+    function bounceRow(rowIdx){ const row = document.getElementById(`row-${rowIdx}`); row?.classList.add('bounce'); setTimeout(() => row?.classList.remove('bounce'), 600); }
 
-    function updateKeyboard() {
+    function updateKeyboard(){
       const state = {};
-      gameState.guesses.forEach(g => {
-        g.raw.split('').forEach((ch, i) => {
-          const cur = state[ch];
-          const res = g.result[i];
-          if (res === 'correct') state[ch] = 'correct';
-          else if (res === 'present' && cur !== 'correct') state[ch] = 'present';
-          else if (!cur) state[ch] = 'absent';
-        });
-      });
+      gameState.guesses.forEach(g => g.raw.split('').forEach((ch,i) => {
+        const cur = state[ch]; const res = g.result[i];
+        if(res === 'correct') state[ch] = 'correct';
+        else if(res === 'present' && cur !== 'correct') state[ch] = 'present';
+        else if(!cur) state[ch] = 'absent';
+      }));
       document.querySelectorAll('.kb-key').forEach(btn => {
         const k = btn.dataset.key;
         btn.className = 'kb-key' + (k.length > 1 ? ' wide' : '');
-        if (state[k]) btn.classList.add(state[k]);
+        if(state[k]) btn.classList.add(state[k]);
       });
     }
 
-    function getShareGrid() {
-      return gameState.guesses.map(g => g.result.map(r => r === 'correct' ? '🟩' : r === 'present' ? '🟨' : '⬛').join('')).join('\n');
-    }
+    function getShareGrid(){ return gameState.guesses.map(g => g.result.map(r => r === 'correct' ? '🟩' : r === 'present' ? '🟨' : '⬛').join('')).join('\n'); }
 
-    async function fetchTodayWord() {
+    async function fetchTodayWord(){
       const today = getTodayKey();
-      const { data, error } = await supabase.from('tb_palavras').select('*').eq('data_uso', today).limit(1).maybeSingle();
-      if (error) throw error;
-      if (!data) throw new Error('Nenhuma palavra cadastrada para hoje no Supabase.');
+      const { data, error } = await sb.from('tb_palavras').select('*').eq('data_uso', today).limit(1).maybeSingle();
+      if(error) throw error;
+      if(!data) throw new Error('Nenhuma palavra cadastrada para hoje no Supabase.');
       const word = String(data.palavra || '').trim().toUpperCase();
       const normalized = normalizeWord(word);
-      if (normalized.length !== 5) throw new Error('A palavra cadastrada no Supabase precisa ter 5 letras.');
-      return {
-        id: data.id,
-        word,
-        normalized,
-        type: data.tipo || '',
-        meaning: data.significado || '',
-        phrase: data.dica || ''
-      };
+      if(normalized.length !== 5) throw new Error('A palavra cadastrada no Supabase precisa ter 5 letras.');
+      return { id:data.id, word, normalized, type:data.tipo || '', meaning:data.significado || '', phrase:data.dica || '' };
     }
 
-    async function loadGame() {
+    async function loadGame(){
       gameState.loading = true;
       const key = getTodayKey();
       gameState.todayKey = key;
@@ -418,7 +352,7 @@
       renderPlayerBar();
       try {
         const wordData = await fetchTodayWord();
-        const savedState = storage.load('gameState_' + key, null);
+        const savedState = storage.load('gameState_'+key, null);
         gameState.answer = wordData.normalized;
         gameState.answerData = wordData;
         gameState.guesses = savedState?.guesses || [];
@@ -428,7 +362,7 @@
         renderSavedGuesses();
         renderDefinition();
         renderPlayerBar();
-      } catch (error) {
+      } catch(error){
         console.error(error);
         gameState.answer = '';
         gameState.answerData = null;
@@ -437,125 +371,100 @@
         gameState.currentRow = 0;
         gameState.gameOver = true;
         toast(error.message || 'Erro ao carregar palavra do dia.');
-      } finally {
-        gameState.loading = false;
-      }
+      } finally { gameState.loading = false; }
     }
 
-    async function upsertRanking() {
-      if (!player) return;
+    async function upsertRanking(){
+      if(!player) return;
       const char = CHARACTERS.find(c => c.id === player.charId) || CHARACTERS[0];
-      const payload = {
-        player_name: player.name,
-        char_id: player.charId,
-        emoji: char.emoji,
-        points: player.points || 0,
-        wins: player.wins || 0,
-        games: player.games || 0,
-        streak: player.streak || 0,
-        max_streak: player.maxStreak || 0,
-        updated_at: new Date().toISOString()
-      };
-      const { error } = await supabase.from('tb_ranking').upsert(payload, { onConflict: 'player_name' });
-      if (error) console.error(error);
+      const payload = { player_name: player.name, char_id: player.charId, emoji: char.emoji, points: player.points || 0, wins: player.wins || 0, games: player.games || 0, streak: player.streak || 0, max_streak: player.maxStreak || 0, updated_at: new Date().toISOString() };
+      const { error } = await sb.from('tb_ranking').upsert(payload, { onConflict: 'player_name' });
+      if(error) console.error(error);
     }
 
-    async function renderRanking() {
+    async function renderRanking(){
       const statsEl = document.getElementById('my-stats');
-      if (player) {
-        statsEl.innerHTML = `<div class="stat-box"><div class="stat-num">${player.games || 0}</div><div class="stat-lbl">Jogos</div></div><div class="stat-box"><div class="stat-num">${player.wins || 0}</div><div class="stat-lbl">Vitórias</div></div><div class="stat-box"><div class="stat-num">${player.streak || 0}</div><div class="stat-lbl">Sequência</div></div><div class="stat-box"><div class="stat-num">${player.points || 0}</div><div class="stat-lbl">Pontos</div></div>`;
-      } else statsEl.innerHTML = '';
+      if(player) statsEl.innerHTML = `<div class="stat-box"><div class="stat-num">${player.games || 0}</div><div class="stat-lbl">Jogos</div></div><div class="stat-box"><div class="stat-num">${player.wins || 0}</div><div class="stat-lbl">Vitórias</div></div><div class="stat-box"><div class="stat-num">${player.streak || 0}</div><div class="stat-lbl">Sequência</div></div><div class="stat-box"><div class="stat-num">${player.points || 0}</div><div class="stat-lbl">Pontos</div></div>`;
+      else statsEl.innerHTML = '';
       const wrap = document.getElementById('rank-list-wrap');
-      wrap.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px">Carregando ranking...</p>';
-      const { data, error } = await supabase.from('tb_ranking').select('*').order('points', { ascending:false }).limit(50);
-      if (error) {
-        wrap.innerHTML = '<p style="text-align:center;color:var(--red);padding:20px">Erro ao carregar ranking.</p>';
-        return;
-      }
-      if (!data || data.length === 0) {
-        wrap.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px">Nenhum jogador ainda.</p>';
-        return;
-      }
-      const html = data.map((r, i) => {
+      wrap.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px">Carregando ranking...</p>`;
+      const { data, error } = await sb.from('tb_ranking').select('*').order('points', { ascending:false }).limit(50);
+      if(error){ wrap.innerHTML = `<p style="text-align:center;color:var(--red);padding:20px">Erro ao carregar ranking.</p>`; return; }
+      if(!data || data.length === 0){ wrap.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:40px">Nenhum jogador ainda.</p>`; return; }
+      const html = data.map((r,i) => {
         const pos = i + 1;
         const cl = pos <= 3 ? `top-${pos}` : '';
         const medal = ['🥇','🥈','🥉'][i] || pos;
         const winRate = r.games > 0 ? Math.round((r.wins || 0) / r.games * 100) : 0;
         const isMe = player && r.player_name === player.name;
-        return `<div class="rank-item ${cl}" style="${isMe ? 'border-color:var(--blue);' : ''}"><div class="rank-pos">${medal}</div><div class="rank-emoji">${escapeHtml(r.emoji || '🎮')}</div><div class="rank-info"><div class="rank-name">${escapeHtml(r.player_name)}${isMe ? ' <span style="color:var(--blue);font-size:.7rem">(você)</span>' : ''}</div><div class="rank-stats">${r.wins || 0} vitórias · ${winRate}% · seq. ${r.max_streak || 0}</div></div><div class="rank-pts">${r.points || 0}</div></div>`;
+        return `<div class="rank-item ${cl}" style="${isMe ? 'border-color:var(--blue)' : ''}"><div class="rank-pos">${medal}</div><div class="rank-emoji">${escapeHtml(r.emoji || '🙂')}</div><div class="rank-info"><div class="rank-name">${escapeHtml(r.player_name || '')}${isMe ? ' <span style="color:var(--blue);font-size:.7rem">você</span>' : ''}</div><div class="rank-stats">${r.wins || 0} vitórias · ${winRate}% · seq. ${r.max_streak || 0}</div></div><div class="rank-pts">${r.points || 0}</div></div>`;
       }).join('');
       wrap.innerHTML = `<div class="section-label" style="padding:0 16px;margin-bottom:8px">Top ${data.length} jogadores</div><div class="rank-list">${html}</div>`;
     }
 
-    async function renderWordList() {
+    async function renderWordList(){
       const el = document.getElementById('word-list-el');
-      el.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px">Carregando palavras...</p>';
+      el.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px">Carregando palavras...</p>`;
       const today = getTodayKey();
-      const { data, error } = await supabase.from('tb_palavras').select('*').order('data_uso', { ascending:true }).limit(200);
-      if (error) {
-        el.innerHTML = '<p style="text-align:center;color:var(--red);padding:20px">Erro ao carregar palavras.</p>';
-        return;
-      }
-      if (!data || data.length === 0) {
-        el.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px">Nenhuma palavra cadastrada.</p>';
-        return;
-      }
-      el.innerHTML = `<div class="word-list">${data.map(w => `<div class="word-entry"><div><div><span class="we-word">${escapeHtml(String(w.palavra || '').toUpperCase())}</span>${w.data_uso === today ? '<span class="today-badge" style="margin-left:8px">HOJE</span>' : ''}</div><div class="we-date" style="margin-top:3px">${escapeHtml(w.data_uso || '')} · ${escapeHtml((w.significado || '').slice(0, 70))}${(w.significado || '').length > 70 ? '…' : ''}</div></div><button class="we-del" data-delete-word="${w.id}" title="Remover">🗑</button></div>`).join('')}</div>`;
+      const { data, error } = await sb.from('tb_palavras').select('*').order('data_uso', { ascending:true }).limit(200);
+      if(error){ el.innerHTML = `<p style="text-align:center;color:var(--red);padding:20px">Erro ao carregar palavras.</p>`; return; }
+      if(!data || data.length === 0){ el.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px">Nenhuma palavra cadastrada.</p>`; return; }
+      el.innerHTML = `<div class="word-list">${data.map(w => `<div class="word-entry"><div><div><span class="we-word">${escapeHtml(String(w.palavra || '').toUpperCase())}</span>${w.data_uso === today ? '<span class="today-badge" style="margin-left:8px">HOJE</span>' : ''}</div><div class="we-date" style="margin-top:3px">${escapeHtml(w.data_uso || '')} · ${escapeHtml((w.significado || '').slice(0,70))}${(w.significado || '').length > 70 ? '...' : ''}</div></div><button class="we-del" data-delete-word="${w.id}" title="Remover">🗑</button></div>`).join('')}</div>`;
     }
 
-    async function addWord() {
+    async function addWord(){
       const word = document.getElementById('ed-word').value.trim().toUpperCase();
       const type = document.getElementById('ed-type').value.trim();
       const meaning = document.getElementById('ed-meaning').value.trim();
       const phrase = document.getElementById('ed-phrase').value.trim();
       const date = document.getElementById('ed-date').value;
-      if (!word || normalizeWord(word).length !== 5) { toast('Palavra deve ter 5 letras.'); return; }
-      if (!meaning) { toast('Adicione um significado.'); return; }
-      if (!date) { toast('Informe a data de uso.'); return; }
+      if(!word || normalizeWord(word).length !== 5){ toast('Palavra deve ter 5 letras.'); return; }
+      if(!meaning){ toast('Adicione um significado.'); return; }
+      if(!date){ toast('Informe a data de uso.'); return; }
       const payload = { palavra: word, tipo: type, significado: meaning, dica: phrase, data_uso: date };
-      const { error } = await supabase.from('tb_palavras').insert(payload);
-      if (error) { toast('Erro ao salvar palavra.'); console.error(error); return; }
+      const { error } = await sb.from('tb_palavras').insert(payload);
+      if(error){ toast('Erro ao salvar palavra.'); console.error(error); return; }
       ['ed-word','ed-type','ed-meaning','ed-phrase','ed-date'].forEach(id => document.getElementById(id).value = '');
       toast('Palavra adicionada no Supabase.');
       await renderWordList();
     }
 
-    async function deleteWord(id) {
-      if (!confirm('Remover esta palavra do Supabase?')) return;
-      const { error } = await supabase.from('tb_palavras').delete().eq('id', id);
-      if (error) { toast('Erro ao remover palavra.'); console.error(error); return; }
+    async function deleteWord(id){
+      if(!confirm('Remover esta palavra do Supabase?')) return;
+      const { error } = await sb.from('tb_palavras').delete().eq('id', id);
+      if(error){ toast('Erro ao remover palavra.'); console.error(error); return; }
       toast('Palavra removida.');
       await renderWordList();
     }
 
-    function renderStatsModal() {
-      if (!player) return;
+    function renderStatsModal(){
+      if(!player) return;
       const dist = player.dist || [0,0,0,0,0,0];
       const maxDist = Math.max(...dist, 1);
       const winRate = player.games > 0 ? Math.round((player.wins || 0) / player.games * 100) : 0;
-      const distHtml = dist.map((v, i) => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div class="dist-lbl">${i+1}</div><div style="flex:1;background:var(--surface2);border-radius:4px;height:20px;overflow:hidden"><div style="height:100%;background:var(--correct);border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:.75rem;font-weight:800;min-width:24px;width:${Math.max(8, Math.round(v / maxDist * 100))}%">${v}</div></div></div>`).join('');
+      const distHtml = dist.map((v,i) => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div class="dist-lbl">${i+1}</div><div style="flex:1;background:var(--surface2);border-radius:4px;height:20px;overflow:hidden"><div style="height:100%;background:var(--correct);border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:.75rem;font-weight:800;min-width:24px;width:${Math.max(8, Math.round(v / maxDist * 100))}%">${v}</div></div></div>`).join('');
       document.getElementById('modal-stats-content').innerHTML = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px"><div class="stat-box"><div class="stat-num">${player.games || 0}</div><div class="stat-lbl">Jogados</div></div><div class="stat-box"><div class="stat-num">${winRate}%</div><div class="stat-lbl">Vitórias</div></div><div class="stat-box"><div class="stat-num">${player.streak || 0}</div><div class="stat-lbl">Sequência</div></div><div class="stat-box"><div class="stat-num">${player.maxStreak || 0}</div><div class="stat-lbl">Melhor seq.</div></div></div><div class="section-label">Distribuição de tentativas</div>${distHtml}<div class="countdown-wrap" style="margin-top:16px"><div class="countdown-label">Próxima palavra em</div><div class="countdown-time" id="modal-countdown">--:--:--</div></div>`;
       updateCountdown();
     }
 
-    function showResult(won, pts, attempts) {
+    function showResult(won, pts, attempts){
       const d = gameState.answerData;
-      document.getElementById('result-emoji').textContent = won ? WIN_EMOJIS[attempts - 1] : '😔';
+      document.getElementById('result-emoji').textContent = won ? WIN_EMOJIS[attempts - 1] : '😵';
       const title = document.getElementById('result-title');
       title.textContent = won ? WIN_MSGS[attempts - 1] : 'QUASE!';
-      title.className = 'result-title ' + (won ? 'win' : 'lose');
+      title.className = `result-title ${won ? 'win' : 'lose'}`;
       document.getElementById('result-word').textContent = d?.word || gameState.answer;
-      document.getElementById('result-pts').innerHTML = won ? `+<strong>${pts}</strong> pontos · Total: <strong>${player.points}</strong>` : `A palavra era <strong style="color:var(--accent)">${escapeHtml(d?.word || gameState.answer)}</strong>`;
+      document.getElementById('result-pts').innerHTML = won ? `<strong>${pts}</strong> pontos · Total <strong>${player.points}</strong>` : `A palavra era <strong style="color:var(--accent)">${escapeHtml(d?.word || gameState.answer)}</strong>`;
       document.getElementById('result-def').textContent = d?.meaning || '';
       document.getElementById('share-area').innerHTML = `<div class="share-grid">${getShareGrid().split('\n').map(l => `<div>${l}</div>`).join('')}</div>`;
       document.getElementById('result-overlay').classList.add('show');
       updateCountdown();
     }
 
-    async function endGame(won) {
+    async function endGame(won){
       const attempts = gameState.guesses.length;
       let pts = 0;
-      if (won) {
+      if(won){
         pts = 7 - attempts;
         player.wins = (player.wins || 0) + 1;
         player.streak = (player.streak || 0) + 1;
@@ -577,89 +486,70 @@
       setTimeout(() => showResult(won, pts, attempts), won ? 1200 : 800);
     }
 
-    async function submitGuess() {
-      if (gameState.loading || gameState.gameOver || !player || !gameState.answer) return;
+    async function submitGuess(){
+      if(gameState.loading || gameState.gameOver || !player || !gameState.answer) return;
       const raw = gameState.currentGuess;
-      if (raw.length < 5) { shakeRow(gameState.currentRow); toast('Palavra muito curta!'); return; }
+      if(raw.length < 5){ shakeRow(gameState.currentRow); toast('Palavra muito curta!'); return; }
       const normalized = normalizeWord(raw);
-      if (settings.hard && gameState.guesses.length > 0) {
-        const violation = checkHardMode(normalized);
-        if (violation) { shakeRow(gameState.currentRow); toast(violation); return; }
-      }
+      if(settings.hard && gameState.guesses.length > 0){ const violation = checkHardMode(normalized); if(violation){ shakeRow(gameState.currentRow); toast(violation); return; } }
       const result = evaluateGuess(normalized, gameState.answer);
-      const guessObj = { raw: normalized, display: normalized.split(''), result };
+      const guessObj = { raw: normalized, normalized, display: normalized.split(''), result };
       gameState.guesses.push(guessObj);
       gameState.loading = true;
       revealRow(gameState.currentRow, guessObj.display, result, async () => {
         updateKeyboard();
         const won = result.every(r => r === 'correct');
         gameState.gameOver = won || gameState.currentRow >= 5;
-        if (gameState.gameOver) await endGame(won);
-        else { gameState.currentRow++; gameState.currentGuess = ''; renderPlayerBar(); }
+        if(gameState.gameOver) await endGame(won);
+        else gameState.currentRow++;
+        gameState.currentGuess = '';
+        renderPlayerBar();
         saveGameState();
         gameState.loading = false;
       });
     }
 
-    function shareResult() {
+    function shareResult(){
       const d = gameState.answerData;
       const won = gameState.guesses.at(-1)?.result?.every(r => r === 'correct');
       const attempts = won ? gameState.guesses.length : 'X';
-      const text = `TermoGN – ${d?.word || gameState.answer} ${attempts}/6\n\n${getShareGrid()}\n\nJogue em: TermoGN`;
-      if (navigator.share) navigator.share({ text }).catch(() => {});
+      const text = `TermoGN ${d?.word || gameState.answer} ${attempts}/6\n${getShareGrid()}\n\nJogue em TermoGN`;
+      if(navigator.share) navigator.share({ text }).catch(() => {});
       else navigator.clipboard.writeText(text).then(() => toast('Resultado copiado!')).catch(() => toast('Não foi possível copiar.'));
     }
 
-    function closeResult() { document.getElementById('result-overlay').classList.remove('show'); }
-    function openModal(id) { document.getElementById(id)?.classList.add('open'); if (id === 'modal-stats') renderStatsModal(); }
-    function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+    function closeResult(){ document.getElementById('result-overlay').classList.remove('show'); }
+    function openModal(id){ document.getElementById(id)?.classList.add('open'); if(id === 'modal-stats') renderStatsModal(); }
+    function closeModal(id){ document.getElementById(id)?.classList.remove('open'); }
+    function getNextMidnight(){ const now = new Date(); const next = new Date(now); next.setHours(24,0,0,0); return next; }
+    function updateCountdown(){ const diff = getNextMidnight() - new Date(); const h = String(Math.floor(diff / 3600000)).padStart(2,'0'); const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0'); const s = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0'); document.querySelectorAll('#result-countdown, #modal-countdown').forEach(el => { if(el) el.textContent = `${h}:${m}:${s}`; }); }
 
-    function getNextMidnight() { const now = new Date(); const next = new Date(now); next.setHours(24,0,0,0); return next; }
-    function updateCountdown() {
-      const diff = getNextMidnight() - new Date();
-      const h = String(Math.floor(diff / 3600000)).padStart(2,'0');
-      const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
-      const s = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
-      document.querySelectorAll('#result-countdown, #modal-countdown').forEach(el => { if (el) el.textContent = `${h}:${m}:${s}`; });
-    }
-
-    function showScreen(name) {
+    function showScreen(name){
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('screen-' + name)?.classList.add('active');
+      document.getElementById(`screen-${name}`)?.classList.add('active');
       const showNav = ['game','ranking','editorial','settings'].includes(name);
       document.getElementById('nav-bar').classList.toggle('hidden', !showNav);
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('nav-' + name)?.classList.add('active');
-      if (name === 'ranking') renderRanking();
-      if (name === 'editorial') renderWordList();
+      document.getElementById(`nav-${name}`)?.classList.add('active');
+      if(name === 'ranking') renderRanking();
+      if(name === 'editorial') renderWordList();
     }
 
-    function startGame() {
+    function startGame(){
       const name = document.getElementById('player-name').value.trim();
       const selected = document.querySelector('.char-card.selected');
-      if (!name) { toast('Digite seu nome!'); return; }
-      if (!selected) { toast('Escolha um personagem!'); return; }
-      player = {
-        name,
-        charId: selected.dataset.charId,
-        points: player?.points || 0,
-        wins: player?.wins || 0,
-        games: player?.games || 0,
-        streak: player?.streak || 0,
-        maxStreak: player?.maxStreak || 0,
-        dist: player?.dist || [0,0,0,0,0,0],
-        lastDate: player?.lastDate || ''
-      };
+      if(!name){ toast('Digite seu nome!'); return; }
+      if(!selected){ toast('Escolha um personagem!'); return; }
+      player = { name, charId:selected.dataset.charId, points: player?.points || 0, wins: player?.wins || 0, games: player?.games || 0, streak: player?.streak || 0, maxStreak: player?.maxStreak || 0, dist: player?.dist || [0,0,0,0,0,0], lastDate: player?.lastDate || null };
       storage.save('player', player);
       loadGame().then(() => showScreen('game'));
     }
 
-    function resetLocalData() {
-      if (!confirm('Apagar progresso local deste dispositivo?')) return;
+    function resetLocalData(){
+      if(!confirm('Apagar progresso local deste dispositivo?')) return;
       storage.remove('player');
       storage.remove('settings');
-      const today = getTodayKey();
-      storage.remove('gameState_' + today);
+      storage.remove('gameState_'+getTodayKey());
       player = null;
       settings = { hard:false, colorblind:false, anim:true };
       gameState = { answer:'', answerData:null, guesses:[], currentGuess:'', currentRow:0, gameOver:false, todayKey:'', loading:false };
@@ -671,33 +561,27 @@
       toast('Progresso local resetado.');
     }
 
-    document.addEventListener('click', async (e) => {
+    document.addEventListener('click', async e => {
       const btnScreen = e.target.closest('[data-screen]');
-      if (btnScreen) showScreen(btnScreen.dataset.screen);
+      if(btnScreen) showScreen(btnScreen.dataset.screen);
       const open = e.target.closest('[data-open-modal]');
-      if (open) openModal(open.dataset.openModal);
+      if(open) openModal(open.dataset.openModal);
       const close = e.target.closest('[data-close-modal]');
-      if (close) closeModal(close.dataset.closeModal);
+      if(close) closeModal(close.dataset.closeModal);
       const tab = e.target.closest('[data-edit-tab]');
-      if (tab) {
-        ['add','list'].forEach(t => {
-          document.getElementById('editpanel-' + t).classList.toggle('hidden', t !== tab.dataset.editTab);
-          document.getElementById('tab-' + t).classList.toggle('active', t === tab.dataset.editTab);
-        });
-        if (tab.dataset.editTab === 'list') await renderWordList();
-      }
+      if(tab){ ['add','list'].forEach(t => { document.getElementById(`editpanel-${t}`).classList.toggle('hidden', t !== tab.dataset.editTab); document.getElementById(`tab-${t}`).classList.toggle('active', t === tab.dataset.editTab); }); if(tab.dataset.editTab === 'list') await renderWordList(); }
       const del = e.target.closest('[data-delete-word]');
-      if (del) await deleteWord(del.dataset.deleteWord);
+      if(del) await deleteWord(del.dataset.deleteWord);
       const modalOverlay = e.target.classList.contains('modal-overlay') ? e.target : null;
-      if (modalOverlay) modalOverlay.classList.remove('open');
+      if(modalOverlay) modalOverlay.classList.remove('open');
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (document.querySelector('.modal-overlay.open') || document.getElementById('result-overlay').classList.contains('show')) return;
-      if (!document.getElementById('screen-game').classList.contains('active')) return;
-      if (e.key === 'Enter') submitGuess();
-      else if (e.key === 'Backspace') deleteLetter();
-      else if (/^[a-zA-ZÀ-ÿ]$/.test(e.key)) addLetter(e.key.toUpperCase());
+    document.addEventListener('keydown', e => {
+      if(document.querySelector('.modal-overlay.open') || document.getElementById('result-overlay').classList.contains('show')) return;
+      if(!document.getElementById('screen-game').classList.contains('active')) return;
+      if(e.key === 'Enter') submitGuess();
+      else if(e.key === 'Backspace') deleteLetter();
+      else if(/^[a-zA-Z-]$/.test(e.key)) addLetter(e.key.toUpperCase());
     });
 
     document.getElementById('start-btn').addEventListener('click', startGame);
@@ -710,7 +594,7 @@
     document.getElementById('reset-local-btn').addEventListener('click', resetLocalData);
     document.getElementById('share-btn').addEventListener('click', shareResult);
     document.getElementById('close-result-btn').addEventListener('click', closeResult);
-    document.getElementById('ed-word').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÂÊÔÃÕÀÜÇ]/g, ''); });
+    document.getElementById('ed-word').addEventListener('input', e => e.target.value = e.target.value.toUpperCase().replace(/[^A-ZÀ-ÚÇ]/g, ''));
 
     window.addEventListener('DOMContentLoaded', async () => {
       buildCharGrid();
@@ -718,12 +602,9 @@
       buildKeyboard();
       applySettings();
       updateCountdown();
-      clearInterval(window._cdTimer);
-      window._cdTimer = setInterval(updateCountdown, 1000);
-      if (player) {
-        await loadGame();
-        showScreen('game');
-      }
+      clearInterval(window.cdTimer);
+      window.cdTimer = setInterval(updateCountdown, 1000);
+      if(player){ await loadGame(); showScreen('game'); }
     });
   </script>
 </body>
