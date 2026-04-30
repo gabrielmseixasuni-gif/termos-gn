@@ -341,36 +341,41 @@
       return { id:data.id, word, normalized, type:data.tipo || '', meaning:data.significado || '', phrase:data.dica || '' };
     }
 
-    async function loadGame(){
-      gameState.loading = true;
-      const key = getTodayKey();
-      gameState.todayKey = key;
-      buildBoard();
-      renderPlayerBar();
-      try {
-        const wordData = await fetchTodayWord();
-        const savedState = storage.load('gameState_'+key, null);
-        gameState.answer = wordData.normalized;
-        gameState.answerData = wordData;
-        gameState.guesses = savedState?.guesses || [];
-        gameState.currentGuess = '';
-        gameState.currentRow = gameState.guesses.length;
-        gameState.gameOver = !!savedState?.gameOver;
-        renderSavedGuesses();
-        renderDefinition();
-        renderPlayerBar();
-      } catch(error){
-        console.error(error);
-        gameState.answer = '';
-        gameState.answerData = null;
-        gameState.guesses = [];
-        gameState.currentGuess = '';
-        gameState.currentRow = 0;
-        gameState.gameOver = true;
-        toast(error.message || 'Erro ao carregar palavra do dia.');
-      } finally { gameState.loading = false; }
-    }
+  async function loadGame() {
+  gameState.loading = true;
+  buildBoard();
+  renderPlayerBar();
 
+  try {
+    const wordData = await fetchTodayWord();
+
+    const sessionKey = `${getTodayKey()}_${wordData.id}`;
+    const savedState = storage.load(`gameState_${sessionKey}`, null);
+
+    gameState.todayKey = sessionKey;
+    gameState.answer = wordData.normalized;
+    gameState.answerData = wordData;
+    gameState.guesses = savedState?.guesses || [];
+    gameState.currentGuess = '';
+    gameState.currentRow = gameState.guesses.length;
+    gameState.gameOver = !!savedState?.gameOver;
+
+    renderSavedGuesses();
+    renderDefinition();
+    renderPlayerBar();
+  } catch (error) {
+    console.error(error);
+    gameState.answer = '';
+    gameState.answerData = null;
+    gameState.guesses = [];
+    gameState.currentGuess = '';
+    gameState.currentRow = 0;
+    gameState.gameOver = true;
+    toast(error.message || 'Erro ao carregar palavra do dia.');
+  } finally {
+    gameState.loading = false;
+  }
+}
     async function upsertRanking(){
       if(!player) return;
       const char = CHARACTERS.find(c => c.id === player.charId) || CHARACTERS[0];
